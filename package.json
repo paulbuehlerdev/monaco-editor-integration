@@ -3,7 +3,8 @@
     "version": "1.1.9",
     "main": "./index.js",
     "dependencies": {
-        "@nextrap/nt-framework": "^1.1.1"
+        "@nextrap/nt-framework": "^1.1.1",
+        "monaco-editor": "^0.52.2"
     },
     "devDependencies": {
         "@nextrap/style-reset": "^0.1.1"
