@@ -1,1 +1,18 @@
-@use '@nextrap/style-reset' as *;
+.testbed-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.editor-container {
+  width: 100%;
+  height: 450px;
+}
+
+.controls-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
