@@ -44,19 +44,20 @@ class EditorTestbed extends LitElement {
 
         ${
           this.editor &&
-          html` <div class="controls-container">
-            <textarea
-              disabled
-              .value=${this.textFromEditor}
-              @input=${(e: Event) =>
-                (this.textFromEditor = (e.target as HTMLTextAreaElement).value)}
-              rows="5"
-              cols="30"
-            ></textarea>
-            <button @click=${this.handleGetTextFromEditor}>
-              Get text from editor
-            </button>
-          </div>`
+          html`
+            <div class="controls-container">
+              <textarea
+                disabled
+                .value=${this.textFromEditor}
+                @input=${(e: Event) =>
+                  (this.textFromEditor = (e.target as HTMLTextAreaElement).value)}
+                rows="5"
+                cols="30"
+              ></textarea>
+                <button class="btn btn-secondary" @click=${this.handleGetTextFromEditor}>
+                  Get text from editor
+                </button>
+            </div>`
         }
       </div>
       </div>

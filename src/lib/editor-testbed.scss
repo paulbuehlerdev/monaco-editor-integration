@@ -1,3 +1,7 @@
+@use '@nextrap/style-reset' as *;
+@use '@nextrap/style-base' as *;
+@use '@nextrap/style-button' as *;
+
 .testbed-container {
   width: 100%;
   display: flex;
@@ -15,4 +19,12 @@
 .controls-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
+}
+
+.btn {
+  margin: auto;
+}
+
+textarea {
+  border: 1px solid #ccc;
 }
