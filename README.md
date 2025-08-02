@@ -1,3 +1,3 @@
 # nte-editor
 
-Contains the Monaco Editor
+Contains the Monaco EditorTestbed

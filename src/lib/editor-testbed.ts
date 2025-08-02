@@ -1,16 +1,16 @@
 import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import style from './editor.scss?inline';
+import style from './editor-testbed.scss?inline';
 
-@customElement('nte-editor')
-class Editor extends LitElement {
+@customElement('editor-testbed')
+class EditorTestbed extends LitElement {
   static get is() {
-    return 'nte-editor';
+    return 'editor-testbed';
   }
 
   static override styles = [unsafeCSS(style)];
 
   override render() {
-    return html` <div>hello world</div> `;
+    return html` <div>editor-testbed</div> `;
   }
 }

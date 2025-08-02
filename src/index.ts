@@ -1,5 +1,5 @@
-export * from './lib/editor';
+export * from './lib/editor-testbed';
 
-console.log('Loading nte-editor...');
+console.log('Loading editor-testbed...');
 
 import './editor-global.scss';
