@@ -1,7 +1,7 @@
 {
-    "name": "nte-nav",
+    "name": "monaco-editor-integration",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "nextrap-elements/nte-nav/src",
+    "sourceRoot": "nextrap-elements/monaco-editor-integration/src",
     "projectType": "library",
     "release": {
         "version": {

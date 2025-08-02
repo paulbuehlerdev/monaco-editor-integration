@@ -1,5 +1,5 @@
 {
-    "name": "@nextrap/nte-nav",
+    "name": "@nextrap/monaco-editor-integration",
     "version": "1.1.9",
     "main": "./index.js",
     "dependencies": {
