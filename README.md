@@ -1,3 +1,3 @@
-# nte-nav
+# nte-editor
 
-A navigation element.
+Contains the Monaco Editor

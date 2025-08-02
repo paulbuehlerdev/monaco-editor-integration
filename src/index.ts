@@ -1,9 +1,5 @@
-export * from './lib/nte-nav';
-export * from './lib/nte-navbar';
-export * from './lib/nte-navbar-line';
+export * from './lib/editor';
 
-console.log('Loading nte-nav...');
+console.log('Loading nte-editor...');
 
-// The light-dom content of the nav element
-import '@nextrap/nte-burger';
-import './nav-global.scss';
+import './editor-global.scss';
