@@ -1,14 +1,12 @@
 import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import { createRef, ref } from 'lit/directives/ref.js';
-import monacoStyle from 'monaco-editor/min/vs/editor/editor.main.css?inline';
 import {
-  createEditor,
   EditorInstance,
   EditorLanguage,
   editorLanguages,
 } from './createEditor';
 import style from './editor-testbed.scss?inline';
+import { EditorInitEvent, EditorInitEventName } from './monaco-editor';
 
 const defaultLanguage: EditorLanguage = 'html';
 
@@ -18,27 +16,17 @@ class EditorTestbed extends LitElement {
     return 'editor-testbed';
   }
 
-  static override styles = [unsafeCSS(style), unsafeCSS(monacoStyle)];
-
-  editorContainerRef = createRef<HTMLDivElement>();
+  static override styles = [unsafeCSS(style)];
 
   @state()
-  editor!: EditorInstance;
+  private editor!: EditorInstance;
 
-  override firstUpdated() {
-    const container = this.editorContainerRef.value;
-    if (!container) {
-      console.error('Editor container reference is not set.');
-      return;
-    }
+  connectedCallback() {
+    super.connectedCallback();
 
-    const editor = createEditor({
-      language: defaultLanguage,
-      container,
-    });
-
-    requestAnimationFrame(() => {
-      this.editor = editor;
+    this.addEventListener(EditorInitEventName, (e) => {
+      const event = e as EditorInitEvent;
+      this.editor = event.detail;
     });
   }
 
@@ -79,7 +67,7 @@ class EditorTestbed extends LitElement {
             )}
           </select>
         </h2>
-        <div class="editor-container" ${ref(this.editorContainerRef)}></div>
+        <monaco-editor language="${defaultLanguage}"></monaco-editor>
         ${this.editor &&
         html` <div class="controls-container">
           <textarea
