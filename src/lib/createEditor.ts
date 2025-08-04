@@ -1,20 +1,4 @@
-import 'monaco-editor/esm/vs/editor/editor.all.js';
-
-import 'monaco-editor/esm/vs/editor/standalone/browser/iPadShowKeyboard/iPadShowKeyboard.js';
-import 'monaco-editor/esm/vs/editor/standalone/browser/inspectTokens/inspectTokens.js';
-import 'monaco-editor/esm/vs/editor/standalone/browser/quickAccess/standaloneHelpQuickAccess.js';
-import 'monaco-editor/esm/vs/editor/standalone/browser/quickAccess/standaloneGotoLineQuickAccess.js';
-import 'monaco-editor/esm/vs/editor/standalone/browser/quickAccess/standaloneGotoSymbolQuickAccess.js';
-import 'monaco-editor/esm/vs/editor/standalone/browser/quickAccess/standaloneCommandsQuickAccess.js';
-import 'monaco-editor/esm/vs/editor/standalone/browser/referenceSearch/standaloneReferenceSearch.js';
-
-import 'monaco-editor/esm/vs/language/typescript/monaco.contribution';
-import 'monaco-editor/esm/vs/language/css/monaco.contribution';
-import 'monaco-editor/esm/vs/language/json/monaco.contribution';
-import 'monaco-editor/esm/vs/language/html/monaco.contribution';
-import 'monaco-editor/esm/vs/basic-languages/monaco.contribution';
-
-import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
+import { editor } from './customMonaco';
 
 export const editorLanguages = ['markdown', 'html'] as const;
 export type EditorLanguage = (typeof editorLanguages)[number];
@@ -29,17 +13,17 @@ type EditorProps = {
 export type EditorInstance = ReturnType<typeof createEditor>;
 
 export function createEditor({
-                               container,
-                               value,
-                               onChange,
-                               language
-                             }: EditorProps) {
+  container,
+  value,
+  onChange,
+  language,
+}: EditorProps) {
   const model = editor.createModel(value ?? '', language);
 
   const editorRef = editor.create(container, {
     model,
     theme: 'vs-dark',
-    automaticLayout: true
+    automaticLayout: true,
   });
 
   model.onDidChangeContent(() => {
@@ -52,6 +36,6 @@ export function createEditor({
     setText: (val: string) => model.setValue(val),
     dispose: () => editorRef.dispose(),
     setLanguage: (language: EditorLanguage) =>
-      editor.setModelLanguage(model, language)
+      editor.setModelLanguage(model, language),
   };
 }
