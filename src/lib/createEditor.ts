@@ -1,4 +1,5 @@
-import { editor } from './customMonaco';
+import './customMonaco';
+import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
 
 export const editorLanguages = ['markdown', 'html'] as const;
 export type EditorLanguage = (typeof editorLanguages)[number];

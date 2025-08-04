@@ -21,7 +21,6 @@ class EditorTestbed extends LitElement {
   static override styles = [unsafeCSS(style), unsafeCSS(monacoStyle)];
 
   editorContainerRef = createRef<HTMLDivElement>();
-  @state()
   editor!: EditorInstance;
 
   override firstUpdated() {
@@ -31,9 +30,13 @@ class EditorTestbed extends LitElement {
       return;
     }
 
-    this.editor = createEditor({
+    const editor = createEditor({
       language: defaultLanguage,
       container,
+    });
+
+    requestAnimationFrame(() => {
+      this.editor = editor;
     });
   }
 
@@ -46,7 +49,6 @@ class EditorTestbed extends LitElement {
 
   private handleSetEditorLanguage(e: Event) {
     const language = (e.target as HTMLSelectElement).value;
-    console.log("Setting editor language to:", language);
     this.editor.setLanguage(language);
   }
 
@@ -61,11 +63,12 @@ class EditorTestbed extends LitElement {
           <select @change=${this.handleSetEditorLanguage}>
             ${editorLanguages.map(
               (language) =>
-                html`
-                  <option
-                    ?selected=${language === defaultLanguage}
-                    value="${language}">${language}
-                  </option>`,
+                html` <option
+                  ?selected=${language === defaultLanguage}
+                  value="${language}"
+                >
+                  ${language}
+                </option>`,
             )}
           </select>
         </h2>
