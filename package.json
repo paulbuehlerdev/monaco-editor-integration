@@ -9,7 +9,8 @@
         "monaco-editor": "^0.52.2"
     },
     "devDependencies": {
-        "@nextrap/style-reset": "^0.1.1"
+        "@nextrap/style-reset": "^0.1.1",
+        "vite-plugin-monaco-editor": "^1.1.0"
     },
     "type": "module",
     "style": "./index.css",

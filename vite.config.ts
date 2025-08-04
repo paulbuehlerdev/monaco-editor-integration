@@ -4,16 +4,25 @@ import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import * as path from 'path';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
+import _monacoEditorPlugin from 'vite-plugin-monaco-editor';
 import viteServerConfig from '../../utils/vite/config/vite-server-config';
 import viteTestConfig from '../../utils/vite/config/vite-test-config';
+
+// workaround for ESM and cjs interop
+const monacoEditorPlugin: typeof _monacoEditorPlugin =
+  _monacoEditorPlugin?.default || _monacoEditorPlugin;
 
 export default defineConfig(() => ({
   ...viteServerConfig,
   test: viteTestConfig('nextrap-elements/nt-element-nav'),
   publicDir: './public/www',
   root: __dirname,
-  cacheDir: '../../node_modules/.vite/nextrap-elements/monaco-editor-integration',
+  cacheDir:
+    '../../node_modules/.vite/nextrap-elements/monaco-editor-integration',
   plugins: [
+    monacoEditorPlugin({
+      languageWorkers: ['editorWorkerService', 'html'],
+    }),
     nxViteTsPaths(),
     nxCopyAssetsPlugin(['*.md']),
     dts({
