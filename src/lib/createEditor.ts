@@ -1,10 +1,13 @@
-import { editor } from 'monaco-editor';
+import * as monaco from 'monaco-editor';
+
+export const editorLanguages = ['markdown', 'html'] as const;
+export type EditorLanguage = (typeof editorLanguages)[number];
 
 type EditorProps = {
   container: HTMLElement;
   value?: string;
   onChange?: (value: string) => void;
-  language?: 'markdown' | 'html';
+  language?: EditorLanguage;
 };
 
 export type EditorInstance = ReturnType<typeof createEditor>;
@@ -15,11 +18,10 @@ export function createEditor({
   onChange,
   language,
 }: EditorProps) {
-  const model = editor.createModel(value ?? '', 'markdown');
+  const model = monaco.editor.createModel(value ?? '', language);
 
-  const editorRef = editor.create(container, {
+  const editorRef = monaco.editor.create(container, {
     model,
-    language,
     theme: 'vs-dark',
     automaticLayout: true,
   });
@@ -33,5 +35,7 @@ export function createEditor({
     getText: () => model.getValue(),
     setText: (val: string) => model.setValue(val),
     dispose: () => editorRef.dispose(),
+    setLanguage: (language: EditorLanguage) =>
+      monaco.editor.setModelLanguage(model, language),
   };
 }

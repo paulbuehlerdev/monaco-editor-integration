@@ -1,4 +1,4 @@
-@use '@nextrap/style-reset' as *;
+//@use '@nextrap/style-reset' as *;
 @use '@nextrap/style-base' as *;
 @use '@nextrap/style-button' as *;
 
@@ -27,4 +27,9 @@
 
 textarea {
   border: 1px solid #ccc;
+}
+
+.testbed-title {
+  display: flex;
+  gap: 16px;
 }
