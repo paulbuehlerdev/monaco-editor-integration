@@ -21,6 +21,8 @@ class EditorTestbed extends LitElement {
   static override styles = [unsafeCSS(style), unsafeCSS(monacoStyle)];
 
   editorContainerRef = createRef<HTMLDivElement>();
+
+  @state()
   editor!: EditorInstance;
 
   override firstUpdated() {
@@ -43,6 +45,9 @@ class EditorTestbed extends LitElement {
   @state()
   private textFromEditor: string = '';
 
+  @state()
+  private textToEditor: string = '';
+
   private handleGetTextFromEditor() {
     this.textFromEditor = this.editor?.getText();
   }
@@ -52,13 +57,15 @@ class EditorTestbed extends LitElement {
     this.editor.setLanguage(language);
   }
 
+  private handleSetTextToEditor() {
+    this.editor.setText(this.textToEditor);
+  }
+
   override render() {
     return html`
       <div class="testbed-container">
         <h2 class="testbed-title">
-          <span>
-            Editor Testbed
-          </span>
+          <span> Editor Testbed </span>
 
           <select @change=${this.handleSetEditorLanguage}>
             ${editorLanguages.map(
@@ -73,26 +80,34 @@ class EditorTestbed extends LitElement {
           </select>
         </h2>
         <div class="editor-container" ${ref(this.editorContainerRef)}></div>
-        ${
-          this.editor &&
-          html` <div class="controls-container">
-            <textarea
-              disabled
-              .value=${this.textFromEditor}
-              @input=${(e: Event) =>
-                (this.textFromEditor = (e.target as HTMLTextAreaElement).value)}
-              rows="5"
-              cols="30"
-            ></textarea>
-            <button
-              class="btn btn-secondary"
-              @click=${this.handleGetTextFromEditor}
-            >
-              Get text from editor
-            </button>
-          </div>`
-        }
-      </div>
+        ${this.editor &&
+        html` <div class="controls-container">
+          <textarea
+            disabled
+            .value=${this.textFromEditor}
+            @input=${(e: Event) =>
+              (this.textFromEditor = (e.target as HTMLTextAreaElement).value)}
+            rows="5"
+          ></textarea>
+          <button
+            class="btn btn-secondary"
+            @click=${this.handleGetTextFromEditor}
+          >
+            Get text from editor
+          </button>
+          <textarea
+            .value=${this.textToEditor}
+            @input=${(e: Event) =>
+              (this.textToEditor = (e.target as HTMLTextAreaElement).value)}
+            rows="5"
+          ></textarea>
+          <button
+            class="btn btn-secondary"
+            @click=${this.handleSetTextToEditor}
+          >
+            Set text to editor
+          </button>
+        </div>`}
       </div>
     `;
   }
