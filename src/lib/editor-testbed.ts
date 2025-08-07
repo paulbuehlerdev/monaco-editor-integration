@@ -1,11 +1,11 @@
-import { html, LitElement } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
+import {html, LitElement} from 'lit';
+import {customElement, state} from 'lit/decorators.js';
 import {
   EditorInstance,
   EditorLanguage,
   editorLanguages
 } from './createEditor';
-import { EditorInitEvent, EditorInitEventName } from './monaco-editor';
+import {EditorInitEvent, EditorInitEventName} from './monaco-editor';
 import './editor-testbed.scss';
 
 const defaultLanguage: EditorLanguage = 'html';
@@ -16,14 +16,14 @@ class EditorTestbed extends LitElement {
     return 'editor-testbed';
   }
 
-  createRenderRoot() {
+  override createRenderRoot() {
     return this;
   }
 
   @state()
   private editor!: EditorInstance;
 
-  connectedCallback() {
+  override connectedCallback() {
     super.connectedCallback();
 
     this.addEventListener(EditorInitEventName, (e) => {
@@ -43,7 +43,7 @@ class EditorTestbed extends LitElement {
   }
 
   private handleSetEditorLanguage(e: Event) {
-    const language = (e.target as HTMLSelectElement).value;
+    const language = (e.target as HTMLSelectElement).value as EditorLanguage;
     this.editor.setLanguage(language);
   }
 
