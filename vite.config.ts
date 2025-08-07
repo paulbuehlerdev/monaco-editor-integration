@@ -5,8 +5,8 @@ import * as path from 'path';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import _monacoEditorPlugin from 'vite-plugin-monaco-editor';
-import viteServerConfig from '../../utils/vite/config/vite-server-config';
-import viteTestConfig from '../../utils/vite/config/vite-test-config';
+import viteServerConfig from './utils/vite/config/vite-server-config';
+import viteTestConfig from './utils/vite/config/vite-test-config';
 
 // workaround for ESM and cjs interop
 const monacoEditorPlugin: typeof _monacoEditorPlugin =
