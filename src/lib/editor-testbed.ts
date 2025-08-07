@@ -38,6 +38,9 @@ class EditorTestbed extends LitElement {
   @state()
   private textToEditor: string = '';
 
+  @state()
+  private selectionText: string = "";
+
   private handleGetTextFromEditor() {
     this.textFromEditor = this.editor?.getText();
   }
@@ -49,6 +52,10 @@ class EditorTestbed extends LitElement {
 
   private handleSetTextToEditor() {
     this.editor.setText(this.textToEditor);
+  }
+
+  private handleGetSelectionText() {
+    this.selectionText = this.editor.getSelectionText();
   }
 
   override render() {
@@ -79,7 +86,7 @@ class EditorTestbed extends LitElement {
             .value=${this.textFromEditor}
             @input=${(e: Event) =>
               (this.textFromEditor = (e.target as HTMLTextAreaElement).value)}
-            rows="5"
+            rows="4"
           ></textarea>
             <button
               class="btn btn-secondary"
@@ -91,13 +98,25 @@ class EditorTestbed extends LitElement {
               .value=${this.textToEditor}
               @input=${(e: Event) =>
                 (this.textToEditor = (e.target as HTMLTextAreaElement).value)}
-              rows="5"
+              rows="4"
             ></textarea>
             <button
               class="btn btn-secondary"
               @click=${this.handleSetTextToEditor}
             >
               Set text to editor
+            </button>
+            <textarea
+              .value=${this.selectionText}
+              @input=${(e: Event) =>
+                (this.selectionText = (e.target as HTMLTextAreaElement).value)}
+              rows="4"
+            ></textarea>
+            <button
+              class="btn btn-secondary"
+              @click=${this.handleGetSelectionText}
+            >
+              Get selection text
             </button>
           </div>`}
       </div>
