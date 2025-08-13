@@ -1,11 +1,16 @@
-import Fastify from 'fastify';
-import dotenv from 'dotenv';
+import 'dotenv/config';
 
-dotenv.config();
+import Fastify from 'fastify';
+import { copilotCompletion } from './copilot';
+import type { CompletionRequestBody } from 'monacopilot';
 
 const app = Fastify();
 
 app.get('/', async () => ({ message: 'hello world' }));
+
+app.get('/copilot', async (request) => {
+  return await copilotCompletion(request.body as CompletionRequestBody);
+});
 
 const start = async () => {
   try {
