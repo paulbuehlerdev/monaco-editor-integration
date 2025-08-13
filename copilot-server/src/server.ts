@@ -1,14 +1,25 @@
 import 'dotenv/config';
 
 import Fastify from 'fastify';
+import cors from '@fastify/cors';
 import { copilotCompletion } from './copilot';
 import type { CompletionRequestBody } from 'monacopilot';
 
-const app = Fastify();
+const app = Fastify(
+  {
+    logger: true
+  }
+);
+
+void app.register(cors, {
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['*']
+});
 
 app.get('/', async () => ({ message: 'hello world' }));
 
-app.get('/copilot', async (request) => {
+app.post('/completion', async (request) => {
   return await copilotCompletion(request.body as CompletionRequestBody);
 });
 
