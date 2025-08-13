@@ -1,4 +1,7 @@
 import Fastify from 'fastify';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = Fastify();
 
@@ -15,4 +18,4 @@ const start = async () => {
   }
 };
 
-start();
+void start();

@@ -6,9 +6,12 @@
     "dev": "tsx watch src/server.ts",
     "start": "tsx src/server.ts",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "generate-env-types": "dotenv-types .env"
   },
   "dependencies": {
+    "dotenv": "^17.2.1",
+    "dotenv-types": "^1.0.0",
     "fastify": "^4.26.2",
     "tsx": "^4.7.1"
   },
