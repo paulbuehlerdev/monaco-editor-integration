@@ -11,7 +11,7 @@ type EditorProps = {
   container: HTMLElement;
   value?: string;
   onChange?: (value: string) => void;
-  language?: EditorLanguage;
+  language: EditorLanguage;
 };
 
 export type EditorInstance = ReturnType<typeof createEditor>;
@@ -32,7 +32,7 @@ export function createEditor({
 
   const completionRegistration = registerCompletion(monaco, editorRef, {
     endpoint: 'http://localhost:3000/completion',
-    language: language ?? 'markdown'
+    language
   });
 
   model.onDidChangeContent(() => {
