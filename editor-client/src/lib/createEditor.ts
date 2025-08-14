@@ -55,15 +55,24 @@ export function createEditor({
     }));
   };
 
-  const toggleCompletions = (enabled: boolean) => {
+  const enableCompletions = () => {
     if (completionRegistration) {
-      completionRegistration.deregister();
-    } else {
-      completionRegistration = registerCompletion(monaco, editorRef, {
-        endpoint: 'http://localhost:4100/completion',
-        language
-      });
+      return;
     }
+
+    completionRegistration = registerCompletion(monaco, editorRef, {
+      endpoint: 'http://localhost:4100/completion',
+      language
+    });
+  };
+
+  const disableCompletions = () => {
+    if (!completionRegistration) {
+      return;
+    }
+
+    completionRegistration.deregister();
+    completionRegistration = null;
   };
 
   return {
@@ -72,6 +81,7 @@ export function createEditor({
     dispose: () => editorRef.dispose(),
     setLanguage,
     getSelectionText,
-    toggleCompletions
+    enableCompletions,
+    disableCompletions
   };
 }

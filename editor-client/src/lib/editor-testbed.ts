@@ -1,11 +1,11 @@
-import {html, LitElement} from 'lit';
-import {customElement, state} from 'lit/decorators.js';
+import { html, LitElement } from 'lit';
+import { customElement, state } from 'lit/decorators.js';
 import {
   EditorInstance,
   EditorLanguage,
   editorLanguages
 } from './createEditor';
-import {EditorInitEvent, EditorInitEventName} from './monaco-editor';
+import { EditorInitEvent, EditorInitEventName } from './monaco-editor';
 import './editor-testbed.scss';
 
 const defaultLanguage: EditorLanguage = 'html';
@@ -39,7 +39,7 @@ class EditorTestbed extends LitElement {
   private textToEditor: string = '';
 
   @state()
-  private selectionText: string = "";
+  private selectionText: string = '';
 
   private handleGetTextFromEditor() {
     this.textFromEditor = this.editor?.getText();
@@ -59,7 +59,11 @@ class EditorTestbed extends LitElement {
   }
 
   private handleToggleCompletions(enabled: boolean) {
-    this.editor.toggleCompletions(enabled);
+    if (enabled) {
+      this.editor.enableCompletions();
+    } else {
+      this.editor.disableCompletions();
+    }
   }
 
   override render() {
