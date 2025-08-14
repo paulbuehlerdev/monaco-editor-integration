@@ -66,21 +66,18 @@ export function createEditor({
 
   const setLanguage = (language: EditorLanguage) => {
     editor.setModelLanguage(model, language);
-
-    completionRegistration?.updateOptions((options) => ({
-      ...options,
-      language
-    }));
+    if (completionRegistration) {
+      // reinit the completions for the new language
+      enableCompletions();
+    }
   };
 
   const enableCompletions = () => {
-    if (completionRegistration) {
-      return;
-    }
+    disableCompletions();
 
     completionRegistration = registerCompletion(monaco, editorRef, {
       endpoint: 'http://localhost:4100/completion',
-      language
+      language: model.getLanguageId()
     });
   };
 
