@@ -17,8 +17,7 @@ export default defineConfig(() => ({
   test: viteTestConfig('nextrap-elements/nt-element-nav'),
   publicDir: './public/www',
   root: __dirname,
-  cacheDir:
-    '../../node_modules/.vite/nextrap-elements/monaco-editor-integration',
+
   plugins: [
     monacoEditorPlugin({
       languageWorkers: ['editorWorkerService', 'html'],
