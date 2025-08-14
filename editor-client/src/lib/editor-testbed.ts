@@ -58,11 +58,15 @@ class EditorTestbed extends LitElement {
     this.selectionText = this.editor.getSelectionText();
   }
 
+  private handleToggleCompletions(enabled: boolean) {
+    this.editor.toggleCompletions(enabled);
+  }
+
   override render() {
     return html`
       <div class="testbed-container">
-        <h2 class="testbed-title">
-          <span> Editor Testbed </span>
+        <div class="testbed-title">
+          <h2> Editor Testbed </h2>
 
           <select @change=${this.handleSetEditorLanguage}>
             ${editorLanguages.map(
@@ -76,7 +80,15 @@ class EditorTestbed extends LitElement {
                   </option>`
             )}
           </select>
-        </h2>
+
+          <label>
+            <input
+              type="checkbox"
+              @click=${(e: Event) => this.handleToggleCompletions((e.target as HTMLInputElement).checked)}
+            />
+            Enable Copilot
+          </label>
+        </div>
         <monaco-editor language="${defaultLanguage}"></monaco-editor>
         ${this.editor &&
         html`

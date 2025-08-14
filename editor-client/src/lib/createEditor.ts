@@ -1,6 +1,6 @@
 import './customMonaco';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
-import { registerCompletion } from 'monacopilot';
+import { CompletionRegistration, registerCompletion } from 'monacopilot';
 
 const { editor } = monaco;
 
@@ -30,13 +30,7 @@ export function createEditor({
     automaticLayout: true
   });
 
-
-  const completionRegistration = registerCompletion(monaco, editorRef, {
-    endpoint: 'http://localhost:4100/completion',
-    language
-  });
-
-
+  let completionRegistration: CompletionRegistration | null = null;
 
   model.onDidChangeContent(() => {
     const text = model.getValue();
@@ -55,12 +49,21 @@ export function createEditor({
   const setLanguage = (language: EditorLanguage) => {
     editor.setModelLanguage(model, language);
 
-    completionRegistration.updateOptions((options) => ({
+    completionRegistration?.updateOptions((options) => ({
       ...options,
       language
     }));
+  };
 
-
+  const toggleCompletions = (enabled: boolean) => {
+    if (completionRegistration) {
+      completionRegistration.deregister();
+    } else {
+      completionRegistration = registerCompletion(monaco, editorRef, {
+        endpoint: 'http://localhost:4100/completion',
+        language
+      });
+    }
   };
 
   return {
@@ -68,6 +71,7 @@ export function createEditor({
     setText: (val: string) => model.setValue(val),
     dispose: () => editorRef.dispose(),
     setLanguage,
-    getSelectionText
+    getSelectionText,
+    toggleCompletions
   };
 }
