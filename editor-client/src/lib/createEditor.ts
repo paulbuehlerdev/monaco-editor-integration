@@ -30,10 +30,13 @@ export function createEditor({
     automaticLayout: true
   });
 
+
   const completionRegistration = registerCompletion(monaco, editorRef, {
-    endpoint: 'http://localhost:3000/completion',
+    endpoint: 'http://localhost:4100/completion',
     language
   });
+
+
 
   model.onDidChangeContent(() => {
     const text = model.getValue();
@@ -51,10 +54,13 @@ export function createEditor({
 
   const setLanguage = (language: EditorLanguage) => {
     editor.setModelLanguage(model, language);
+
     completionRegistration.updateOptions((options) => ({
       ...options,
       language
     }));
+
+
   };
 
   return {
