@@ -30,3 +30,10 @@ textarea {
   gap: 16px;
   align-items: center;
 }
+
+.selection-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}

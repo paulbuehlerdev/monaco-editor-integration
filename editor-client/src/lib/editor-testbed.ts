@@ -7,6 +7,7 @@ import {
 } from './createEditor';
 import { EditorInitEvent, EditorInitEventName } from './monaco-editor';
 import './editor-testbed.scss';
+import type { IDisposable, Selection } from 'monaco-editor';
 
 const defaultLanguage: EditorLanguage = 'html';
 
@@ -23,13 +24,24 @@ class EditorTestbed extends LitElement {
   @state()
   private editor!: EditorInstance;
 
+  private selectionChangesSubscription: IDisposable | null = null;
+
   override connectedCallback() {
     super.connectedCallback();
 
     this.addEventListener(EditorInitEventName, (e) => {
       const event = e as EditorInitEvent;
       this.editor = event.detail;
+
+      this.editor.subscribeToSelectionChanges((text, selection) => {
+        this.selectionText = text ?? '';
+        this.selectionState = selection;
+      });
     });
+  }
+
+  override disconnectedCallback() {
+    this.selectionChangesSubscription?.dispose();
   }
 
   @state()
@@ -40,6 +52,9 @@ class EditorTestbed extends LitElement {
 
   @state()
   private selectionText: string = '';
+
+  @state()
+  private selectionState: Selection | null = null;
 
   private handleGetTextFromEditor() {
     this.textFromEditor = this.editor?.getText();
@@ -52,10 +67,6 @@ class EditorTestbed extends LitElement {
 
   private handleSetTextToEditor() {
     this.editor.setText(this.textToEditor);
-  }
-
-  private handleGetSelectionText() {
-    this.selectionText = this.editor.getSelectionText();
   }
 
   private handleToggleCompletions(enabled: boolean) {
@@ -123,17 +134,22 @@ class EditorTestbed extends LitElement {
               Set text to editor
             </button>
             <textarea
+              disabled
               .value=${this.selectionText}
               @input=${(e: Event) =>
                 (this.selectionText = (e.target as HTMLTextAreaElement).value)}
               rows="4"
             ></textarea>
-            <button
-              class="btn btn-secondary"
-              @click=${this.handleGetSelectionText}
-            >
-              Get selection text
-            </button>
+            <div class="selection-state">
+              <span>
+                Current selection
+              </span>
+              <span>
+                ${this.selectionState && !this.selectionState.isEmpty()
+                  ? `Line: ${this.selectionState.startLineNumber}, Column: ${this.selectionState.startColumn} - Line: ${this.selectionState.endLineNumber}, Column: ${this.selectionState.endColumn}`
+                  : 'No selection'}
+              </span>
+            </div>
           </div>`}
       </div>
     `;

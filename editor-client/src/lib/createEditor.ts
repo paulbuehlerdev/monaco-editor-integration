@@ -93,6 +93,15 @@ export function createEditor({
     completionRegistration = null;
   };
 
+  const subscribeToSelectionChanges = (callback: (text: string, selection: monaco.Selection) => void) => {
+    return editorRef.onDidChangeCursorSelection((event) => {
+      const selection = event.selection;
+
+      const selectedText = model.getValueInRange(selection);
+      callback(selectedText, selection);
+    });
+  };
+
   return {
     getText: () => model.getValue(),
     setText: (val: string) => model.setValue(val),
@@ -100,6 +109,7 @@ export function createEditor({
     setLanguage,
     getSelectionText,
     enableCompletions,
-    disableCompletions
+    disableCompletions,
+    subscribeToSelectionChanges
   };
 }
