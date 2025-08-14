@@ -1,6 +1,6 @@
 {
     "name": "monaco-editor-integration",
-    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "$schema": "./node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "nextrap-elements/monaco-editor-integration/src",
     "projectType": "library",
     "release": {

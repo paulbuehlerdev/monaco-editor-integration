@@ -1,7 +1,7 @@
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
-import { createEditor, EditorInstance } from './createEditor';
+import { createEditor, EditorInstance, EditorLanguage } from './createEditor';
 import 'monaco-editor/min/vs/editor/editor.main.css';
 import './monaco-editor.scss';
 
@@ -14,9 +14,9 @@ export class MonacoEditorComponent extends LitElement {
     return 'monaco-editor';
   }
 
-  @property() language?: EditorLanguage;
+  @property() language!: EditorLanguage;
 
-  createRenderRoot() {
+  override createRenderRoot() {
     return this;
   }
 
@@ -31,22 +31,23 @@ export class MonacoEditorComponent extends LitElement {
 
     const editor = createEditor({
       language: this.language,
-      container,
+      container
     });
 
     this.dispatchEvent(
-      new CustomEvent<typeof EditorInitEventName>(EditorInitEventName, {
+      new CustomEvent<EditorInitEvent["detail"]>(EditorInitEventName, {
         detail: editor,
         bubbles: true,
-        composed: true,
-      }),
+        composed: true
+      })
     );
   }
 
-  render() {
-    return html` <div
-      class="editor-container"
-      ${ref(this.editorContainerRef)}
-    ></div>`;
+  override render() {
+    return html`
+      <div
+        class="editor-container"
+        ${ref(this.editorContainerRef)}
+      ></div>`;
   }
 }
