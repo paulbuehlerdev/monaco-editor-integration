@@ -99,6 +99,10 @@ export function createEditor({
     });
   };
 
+  const subscribeToCurrentLineChanges = (callback: (lineContent: string) => unknown) => {
+    return editorRef.onDidChangeCursorPosition((e) => callback(model.getLineContent(e.position.lineNumber)));
+  };
+
   return {
     getText: () => model.getValue(),
     setText: (val: string) => model.setValue(val),
@@ -107,6 +111,7 @@ export function createEditor({
     getSelectionText,
     enableCompletions,
     disableCompletions,
-    subscribeToSelectionChanges
+    subscribeToSelectionChanges,
+    subscribeToCurrentLineChanges
   };
 }
