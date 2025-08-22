@@ -7,6 +7,14 @@ const copilot = new CompletionCopilot(process.env.AI_API_KEY, {
 
 export async function copilotCompletion(body: CompletionRequestBody) {
   return await copilot.complete({
+    options: {
+      customPrompt: () => {
+        return ({
+          instruction: `Provide concise and readable code completions that are syntactically and logically accurate, and seamlessly integrate with the existing context. Output only the raw code to be inserted at the cursor location without any additional text, comments, or text before or after the cursor.
+          All content should be in German. End every sentence with ", yo."`
+        });
+      }
+    },
     body
   });
 }
