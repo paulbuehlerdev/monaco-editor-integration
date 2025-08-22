@@ -37,6 +37,11 @@ class EditorTestbed extends LitElement {
         this.selectionText = text ?? '';
         this.selectionState = selection;
       });
+
+      this.editor.subscribeToCurrentLineChanges((lineContent) => {
+        const match = lineContent.match(/!\[.*?]\((.*?)(?:\s+".*?")?\)/);
+        this.currentImagePreview = match?.[1] ?? null;
+      });
     });
   }
 
@@ -55,6 +60,9 @@ class EditorTestbed extends LitElement {
 
   @state()
   private selectionState: Selection | null = null;
+
+  @state()
+  private currentImagePreview: string | null = null;
 
   private handleGetTextFromEditor() {
     this.textFromEditor = this.editor?.getText();
@@ -150,6 +158,10 @@ class EditorTestbed extends LitElement {
                   : 'No selection'}
               </span>
             </div>
+
+            ${this.currentImagePreview ? html`<img class="preview-image" alt="preview image" src="${this.currentImagePreview}" />` : html`
+              <div class="preview-image"></div>`}
+            <span class="label">Current image preview</span>
           </div>`}
       </div>
     `;
