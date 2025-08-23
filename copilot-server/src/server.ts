@@ -5,7 +5,11 @@ import cors from '@fastify/cors';
 import fastifyStatic from '@fastify/static';
 import { copilotCompletion } from './copilot';
 import type { CompletionRequestBody } from 'monacopilot';
-import { join } from 'path';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = Fastify(
   {
