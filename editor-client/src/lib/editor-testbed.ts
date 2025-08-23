@@ -42,6 +42,10 @@ class EditorTestbed extends LitElement {
         const match = lineContent.match(/!\[.*?]\((.*?)(?:\s+".*?")?\)/);
         this.currentImagePreview = match?.[1] ?? null;
       });
+
+      this.editor.registerCramdownCompletion(() => {
+        return Array.from(this.cssClassesText.matchAll(/\.\w+/g), m => m[0]);
+      });
     });
   }
 
@@ -63,6 +67,9 @@ class EditorTestbed extends LitElement {
 
   @state()
   private currentImagePreview: string | null = null;
+
+  @state()
+  private cssClassesText: string = '';
 
   private handleGetTextFromEditor() {
     this.textFromEditor = this.editor?.getText();
@@ -129,6 +136,7 @@ class EditorTestbed extends LitElement {
             >
               Get text from editor
             </button>
+
             <textarea
               .value=${this.textToEditor}
               @input=${(e: Event) =>
@@ -141,6 +149,7 @@ class EditorTestbed extends LitElement {
             >
               Set text to editor
             </button>
+
             <textarea
               disabled
               .value=${this.selectionText}
@@ -159,9 +168,19 @@ class EditorTestbed extends LitElement {
               </span>
             </div>
 
-            ${this.currentImagePreview ? html`<img class="preview-image" alt="preview image" src="${this.currentImagePreview}" />` : html`
+            ${this.currentImagePreview ? html`<img class="preview-image" alt="preview image"
+                                                   src="${this.currentImagePreview}" />` : html`
               <div class="preview-image"></div>`}
             <span class="label">Current image preview</span>
+
+            <textarea
+              .value=${this.cssClassesText}
+              @input=${(e: Event) =>
+                (this.cssClassesText = (e.target as HTMLTextAreaElement).value)}
+              rows="2"
+            ></textarea>
+
+            <span class="label">Cramdown CSS classes</span>
           </div>`}
       </div>
     `;

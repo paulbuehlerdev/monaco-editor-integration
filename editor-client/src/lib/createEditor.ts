@@ -1,6 +1,9 @@
 import './customMonaco';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import { CompletionRegistration, registerCompletion } from 'monacopilot';
+import { addMarkdownFolding } from './monaca-functions/markdown-folding';
+import { addCramdownCompletion } from './monaca-functions/cramdown-completion';
+import { addContextMenuOptions } from './monaca-functions/context-menu-options';
 
 const { editor } = monaco;
 
@@ -16,6 +19,8 @@ type EditorProps = {
 
 export type EditorInstance = ReturnType<typeof createEditor>;
 
+addMarkdownFolding();
+
 export function createEditor({
                                container,
                                value,
@@ -30,23 +35,7 @@ export function createEditor({
     automaticLayout: true
   });
 
-  editorRef.addAction({
-    id: 'insert-smiley',
-    label: '😊 Smiley einfügen',
-    contextMenuGroupId: 'navigation',
-    contextMenuOrder: 1.5,
-    run: function(ed) {
-      const pos = ed.getPosition();
-      if (!pos) {
-        return;
-      }
-
-      ed.executeEdits('', [{
-        range: new monaco.Range(pos.lineNumber, pos.column, pos.lineNumber, pos.column),
-        text: '😊'
-      }]);
-    }
-  });
+  addContextMenuOptions(editorRef);
 
   let completionRegistration: CompletionRegistration | null = null;
 
@@ -103,6 +92,10 @@ export function createEditor({
     return editorRef.onDidChangeCursorPosition((e) => callback(model.getLineContent(e.position.lineNumber)));
   };
 
+  const registerCramdownCompletion = (getCramdownClasses: () => string[]) => {
+    return addCramdownCompletion(getCramdownClasses);
+  };
+
   return {
     getText: () => model.getValue(),
     setText: (val: string) => model.setValue(val),
@@ -112,6 +105,7 @@ export function createEditor({
     enableCompletions,
     disableCompletions,
     subscribeToSelectionChanges,
-    subscribeToCurrentLineChanges
+    subscribeToCurrentLineChanges,
+    registerCramdownCompletion
   };
 }
