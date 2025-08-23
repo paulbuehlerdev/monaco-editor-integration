@@ -4,6 +4,7 @@ import { CompletionRegistration, registerCompletion } from 'monacopilot';
 import { addMarkdownFolding } from './monaca-functions/markdown-folding';
 import { addCramdownCompletion } from './monaca-functions/cramdown-completion';
 import { addContextMenuOptions } from './monaca-functions/context-menu-options';
+import { addHtmlSelfClosingTags } from './monaca-functions/html-self-closing-tags';
 
 const { editor } = monaco;
 
@@ -35,6 +36,7 @@ export function createEditor({
     automaticLayout: true
   });
 
+  addHtmlSelfClosingTags(editorRef);
   addContextMenuOptions(editorRef);
 
   let completionRegistration: CompletionRegistration | null = null;
