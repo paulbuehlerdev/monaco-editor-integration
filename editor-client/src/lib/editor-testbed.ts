@@ -157,7 +157,7 @@ class EditorTestbed extends LitElement {
                 (this.selectionText = (e.target as HTMLTextAreaElement).value)}
               rows="4"
             ></textarea>
-            <div class="selection-state">
+            <div class="stack">
               <span>
                 Current selection
               </span>
@@ -171,7 +171,11 @@ class EditorTestbed extends LitElement {
             ${this.currentImagePreview ? html`<img class="preview-image" alt="preview image"
                                                    src="${this.currentImagePreview}" />` : html`
               <div class="preview-image"></div>`}
-            <span class="label">Current image preview</span>
+
+            <div class="stack">
+              <span>Current image preview</span>
+              <span>Click inside markdown image to preview</span>
+            </div>
 
             <textarea
               .value=${this.cssClassesText}
@@ -180,7 +184,10 @@ class EditorTestbed extends LitElement {
               rows="2"
             ></textarea>
 
-            <span class="label">Cramdown CSS classes</span>
+            <div class="stack">
+              <span>Cramdown CSS classes</span>
+              <span>Add classes for autocompletion</span>
+            </div>
           </div>`}
       </div>
     `;
