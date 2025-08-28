@@ -1,0 +1,16 @@
+import { readFileSync } from "fs";
+
+export const mistralApiKey = loadSecret("%MISTRAL_API_KEY?file:///run/secrets/mistral_api_key%", "MISTRAL_API_KEY");
+
+function loadSecret(secretString: string, secretName: string): string {
+  if (secretString.startsWith("file://")) {
+    const path = secretString.replace("file://", "");
+    const secret = readFileSync(path, "utf-8").trim();
+    if (!secret) {
+      throw new Error(`${secretName} secret file is empty!`);
+    }
+    return secret;
+  }
+
+  return secretString
+}

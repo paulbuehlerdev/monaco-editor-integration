@@ -3,11 +3,11 @@
 version: 1
 from: "ghcr.io/nfra-project/kickstart-flavor-php:8.3"
 ports: "80:80;4000:4000;4100:4100;127.0.0.1:2222:22"
-secrets: open_ai
+secrets: mistral_api_key
 
 config_file:
-  template: "config.ts.dist"
-  target: "config.ts"
+  template: "copilot-server/src/config.ts.dist"
+  target: "copilot-server/src/config.ts"
 
 
 command:
@@ -20,10 +20,10 @@ command:
 
 
   vite:
-      - vite serve
+      - npm run dev
 
   dev:
-      - "D: vite serve"
+      - "D: npm run dev"
 
 
   update:

@@ -1,6 +1,7 @@
 import { CompletionCopilot, CompletionRequestBody } from 'monacopilot';
+import { mistralApiKey } from './config';
 
-const copilot = new CompletionCopilot(process.env.AI_API_KEY, {
+const copilot = new CompletionCopilot(mistralApiKey, {
   provider: 'mistral',
   model: 'codestral'
 });
