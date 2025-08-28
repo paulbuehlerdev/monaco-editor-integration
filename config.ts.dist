@@ -1,6 +1,16 @@
-
+import * as fs from "fs";
 
 
 const secretTemp = "%SECRET?file:///run/secrets/open_ai%"
 
-export const secret = secretTemp.startsWith("file://");
+if (secretTemp.startsWith("file://")) {
+    // Load this file
+
+    const path = secretTemp.replace("file://","");
+    secretTemp = fs.readFileSync(path, "utf-8").trim();
+    if (!secretTemp) {
+        throw new Error("OpenAI key file is empty");
+    }
+}
+
+export const OpenAIKey = secretTemp;
