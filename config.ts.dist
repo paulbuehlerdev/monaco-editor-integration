@@ -1,0 +1,6 @@
+
+
+
+const secretTemp = "%SECRET?file:///run/secrets/open_ai%"
+
+export const secret = secretTemp.startsWith("file://");
