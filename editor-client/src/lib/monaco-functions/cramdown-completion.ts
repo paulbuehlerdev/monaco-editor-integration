@@ -1,4 +1,5 @@
-import { editor, languages, Position, Range, type IDisposable } from 'monaco-editor/esm/vs/editor/editor.api';
+import { editor, languages, Position, type IDisposable } from 'monaco-editor/esm/vs/editor/editor.api';
+import { getSuggestionRange, getSuggestionTrigger } from './monaco-utils';
 import ITextModel = editor.ITextModel;
 
 export function addCramdownCompletion({
@@ -18,31 +19,11 @@ export function addCramdownCompletion({
     return !!beforeCursor.match(/layout=\w*$/);
   }
 
-  function getTrigger(lineText: string, word: editor.IWordAtPosition) {
-    if (word.startColumn <= 1) {
-      return null;
-    }
-
-    const beforeCursor = lineText.slice(0, word.startColumn - 1);
-
-    return cramdownProviderTriggerCharacters.find((trigger) => beforeCursor.endsWith(trigger)) ?? null;
-  }
-
   function getLine(model: ITextModel, position: Position) {
     return {
       lineText: model.getLineContent(position.lineNumber),
       word: model.getWordUntilPosition(position),
     };
-  }
-
-  function getRange(lineText: string, word: editor.IWordAtPosition, position: Position) {
-    const trigger = getTrigger(lineText, word);
-    return new Range(
-      position.lineNumber,
-      word.startColumn - (trigger?.length ?? 0),
-      position.lineNumber,
-      word.endColumn,
-    );
   }
 
   const cramdownProviderTriggerCharacters = ['.', '#'];
@@ -55,7 +36,8 @@ export function addCramdownCompletion({
         return { suggestions: [] };
       }
 
-      const range = getRange(lineText, word, position);
+      const trigger = getSuggestionTrigger(lineText, word, cramdownProviderTriggerCharacters);
+      const range = getSuggestionRange(word, position, trigger);
 
       return {
         suggestions: getCramdownClasses().map((cramdownClass) => ({
@@ -79,7 +61,8 @@ export function addCramdownCompletion({
         return { suggestions: [] };
       }
 
-      const range = getRange(lineText, word, position);
+      const trigger = getSuggestionTrigger(lineText, word, cramdownLayoutProviderTriggerCharacters);
+      const range = getSuggestionRange(word, position, trigger);
 
       return {
         suggestions: getCramdownLayouts().map((cramdownLayout) => ({

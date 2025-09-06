@@ -16,7 +16,9 @@
         "path": "^0.12.7",
         "sass-embedded": "^1.90.0",
         "vite": "^6.3.5",
-        "vite-plugin-dts": "^4.5.4"
+        "vite-plugin-dts": "^4.5.4",
+        "vscode-css-languageservice": "^6.3.7",
+        "vscode-languageserver-textdocument": "^1.0.12"
     },
     "devDependencies": {
         "@nextrap/style-reset": "^0.1.1"

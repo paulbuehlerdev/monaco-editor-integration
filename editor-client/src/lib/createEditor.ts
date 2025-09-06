@@ -4,6 +4,7 @@ import { CompletionRegistration, registerCompletion } from 'monacopilot';
 import { addContextMenuOptions } from './monaco-functions/context-menu-options';
 import { addCramdownCompletion } from './monaco-functions/cramdown-completion';
 import { addHtmlSelfClosingTags } from './monaco-functions/html-self-closing-tags';
+import { addHtmlStyleCompletions } from './monaco-functions/html-style-completions';
 import { addMarkdownFolding } from './monaco-functions/markdown-folding';
 
 const { editor } = monaco;
@@ -21,6 +22,7 @@ type EditorProps = {
 export type EditorInstance = ReturnType<typeof createEditor>;
 
 addMarkdownFolding();
+addHtmlStyleCompletions();
 
 export function createEditor({ container, value, onChange, language }: EditorProps) {
   const model = editor.createModel(value ?? '', language);

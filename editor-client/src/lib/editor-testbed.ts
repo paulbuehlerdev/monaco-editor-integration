@@ -116,60 +116,58 @@ class EditorTestbed extends LitElement {
         </div>
         <monaco-editor language="${defaultLanguage}"></monaco-editor>
         ${this.editor &&
-        html`
-          <div class="controls-container">
+        html` <div class="controls-container">
           <textarea
             disabled
             .value=${this.textFromEditor}
             @input=${(e: Event) => (this.textFromEditor = (e.target as HTMLTextAreaElement).value)}
             rows="4"
           ></textarea>
-            <button class="btn btn-secondary" @click=${this.handleGetTextFromEditor}>Get text from editor</button>
+          <button class="btn btn-secondary" @click=${this.handleGetTextFromEditor}>Get text from editor</button>
 
-            <textarea
-              .value=${this.textToEditor}
-              @input=${(e: Event) => (this.textToEditor = (e.target as HTMLTextAreaElement).value)}
-              rows="4"
-            ></textarea>
-            <button class="btn btn-secondary" @click=${this.handleSetTextToEditor}>Set text to editor</button>
+          <textarea
+            .value=${this.textToEditor}
+            @input=${(e: Event) => (this.textToEditor = (e.target as HTMLTextAreaElement).value)}
+            rows="4"
+          ></textarea>
+          <button class="btn btn-secondary" @click=${this.handleSetTextToEditor}>Set text to editor</button>
 
-            <textarea
-              disabled
-              .value=${this.selectionText}
-              @input=${(e: Event) => (this.selectionText = (e.target as HTMLTextAreaElement).value)}
-              rows="4"
-            ></textarea>
-            <div class="stack">
-              <span> Current selection </span>
-              <span>
+          <textarea
+            disabled
+            .value=${this.selectionText}
+            @input=${(e: Event) => (this.selectionText = (e.target as HTMLTextAreaElement).value)}
+            rows="4"
+          ></textarea>
+          <div class="stack">
+            <span> Current selection </span>
+            <span>
               ${this.selectionState && !this.selectionState.isEmpty()
                 ? `Line: ${this.selectionState.startLineNumber}, Column: ${this.selectionState.startColumn} - Line: ${this.selectionState.endLineNumber}, Column: ${this.selectionState.endColumn}`
                 : 'No selection'}
             </span>
-            </div>
+          </div>
 
-            ${this.currentImagePreview
-              ? html`<img class="preview-image" alt="preview image" src="${this.currentImagePreview}" />`
-              : html`
-                <div class="preview-image"></div>`}
+          ${this.currentImagePreview
+            ? html`<img class="preview-image" alt="preview image" src="${this.currentImagePreview}" />`
+            : html` <div class="preview-image"></div>`}
 
-            <div class="stack">
-              <span>Current image preview</span>
-              <span>Click inside markdown image to preview</span>
-            </div>
+          <div class="stack">
+            <span>Current image preview</span>
+            <span>Click inside markdown image to preview</span>
+          </div>
 
-            <textarea
-              .value=${this.cssClassesText}
-              @input=${(e: Event) => (this.cssClassesText = (e.target as HTMLTextAreaElement).value)}
-              rows="2"
-            ></textarea>
+          <textarea
+            .value=${this.cssClassesText}
+            @input=${(e: Event) => (this.cssClassesText = (e.target as HTMLTextAreaElement).value)}
+            rows="2"
+          ></textarea>
 
-            <div class="stack">
-              <span>Cramdown autocompletion</span>
-              <span>Add css classes</span>
-              <span>Add html tags for layout=</span>
-            </div>
-          </div>`}
+          <div class="stack">
+            <span>Cramdown autocompletion</span>
+            <span>Add css classes</span>
+            <span>Add html tags for layout=</span>
+          </div>
+        </div>`}
       </div>
     `;
   }
