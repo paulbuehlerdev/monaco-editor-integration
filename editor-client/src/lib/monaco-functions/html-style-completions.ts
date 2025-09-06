@@ -16,14 +16,13 @@ export function addHtmlStyleCompletions() {
         endColumn: position.column,
       });
 
-      if (!/style\s*=\s*"[^"]*$/.test(textUntilPos)) {
+      const match = textUntilPos.match(/style(?:-\w{2})?\s*=\s*"([^"]*)$/)?.[1];
+
+      if (match === undefined) {
         return { suggestions: [] };
       }
 
-      const match = textUntilPos.match(/style\s*=\s*"([^"]*)$/);
-      const cssSnippet = match ? match[1] : '';
-
-      const cssDoc = TextDocument.create('inmemory://model.css', 'css', 1, `div { ${cssSnippet} }`);
+      const cssDoc = TextDocument.create('inmemory://model.css', 'css', 1, `div { ${match} }`);
 
       const completionList = cssLanguageService.doComplete(
         cssDoc,
