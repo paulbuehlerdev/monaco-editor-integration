@@ -10,7 +10,6 @@
         "@nextrap/nt-framework": "^1.1.1",
         "@nextrap/style-base": "^1.1.10",
         "@nextrap/style-button": "^0.0.6",
-
         "@nx/vite": "^21.3.11",
         "monaco-editor": "^0.52.2",
         "monacopilot": "^1.2.7",
@@ -20,8 +19,7 @@
         "vite-plugin-dts": "^4.5.4"
     },
     "devDependencies": {
-        "@nextrap/style-reset": "^0.1.1",
-        "vite-plugin-monaco-editor": "^1.1.0"
+        "@nextrap/style-reset": "^0.1.1"
     },
     "type": "module",
     "style": "./index.css",

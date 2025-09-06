@@ -1,5 +1,8 @@
 {
-  "workspaces": ["copilot-server", "editor-client"],
+  "workspaces": [
+    "copilot-server",
+    "editor-client"
+  ],
   "scripts": {
     "dev": "npx concurrently \"npm --workspace copilot-server run dev\" \"npm --workspace editor-client run dev\""
   }
