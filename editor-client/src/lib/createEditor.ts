@@ -1,10 +1,10 @@
-import './customMonaco';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import { CompletionRegistration, registerCompletion } from 'monacopilot';
-import { addMarkdownFolding } from './monaca-functions/markdown-folding';
-import { addCramdownCompletion } from './monaca-functions/cramdown-completion';
-import { addContextMenuOptions } from './monaca-functions/context-menu-options';
-import { addHtmlSelfClosingTags } from './monaca-functions/html-self-closing-tags';
+import './customMonaco';
+import { addContextMenuOptions } from './monaco-functions/context-menu-options';
+import { addCramdownCompletion } from './monaco-functions/cramdown-completion';
+import { addHtmlSelfClosingTags } from './monaco-functions/html-self-closing-tags';
+import { addMarkdownFolding } from './monaco-functions/markdown-folding';
 
 const { editor } = monaco;
 
@@ -22,18 +22,13 @@ export type EditorInstance = ReturnType<typeof createEditor>;
 
 addMarkdownFolding();
 
-export function createEditor({
-                               container,
-                               value,
-                               onChange,
-                               language
-                             }: EditorProps) {
+export function createEditor({ container, value, onChange, language }: EditorProps) {
   const model = editor.createModel(value ?? '', language);
 
   const editorRef = editor.create(container, {
     model,
     theme: 'vs-dark',
-    automaticLayout: true
+    automaticLayout: true,
   });
 
   addHtmlSelfClosingTags(editorRef);
@@ -68,7 +63,7 @@ export function createEditor({
 
     completionRegistration = registerCompletion(monaco, editorRef, {
       endpoint: 'http://localhost:4100/completion',
-      language: model.getLanguageId()
+      language: model.getLanguageId(),
     });
   };
 
@@ -108,6 +103,6 @@ export function createEditor({
     disableCompletions,
     subscribeToSelectionChanges,
     subscribeToCurrentLineChanges,
-    registerCramdownCompletion
+    registerCramdownCompletion,
   };
 }
