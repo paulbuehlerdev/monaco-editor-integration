@@ -1,6 +1,6 @@
+import './customMonaco';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import { CompletionRegistration, registerCompletion } from 'monacopilot';
-import './customMonaco';
 import { addContextMenuOptions } from './monaco-functions/context-menu-options';
 import { addCramdownCompletion } from './monaco-functions/cramdown-completion';
 import { addHtmlSelfClosingTags } from './monaco-functions/html-self-closing-tags';
@@ -8,7 +8,7 @@ import { addMarkdownFolding } from './monaco-functions/markdown-folding';
 
 const { editor } = monaco;
 
-export const editorLanguages = ['markdown', 'html'] as const;
+export const editorLanguages = ['markdown', 'html', 'typescript'] as const;
 export type EditorLanguage = (typeof editorLanguages)[number];
 
 type EditorProps = {

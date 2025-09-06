@@ -46,4 +46,7 @@ export default defineConfig(() => ({
       },
     },
   },
+  optimizeDeps: {
+    exclude: ['monaco-editor'],
+  },
 }));
