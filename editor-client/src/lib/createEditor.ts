@@ -89,8 +89,8 @@ export function createEditor({ container, value, onChange, language }: EditorPro
     return editorRef.onDidChangeCursorPosition((e) => callback(model.getLineContent(e.position.lineNumber)));
   };
 
-  const registerCramdownCompletion = (getCramdownClasses: () => string[]) => {
-    return addCramdownCompletion(getCramdownClasses);
+  const registerCramdownCompletion: typeof addCramdownCompletion = (props) => {
+    return addCramdownCompletion(props);
   };
 
   return {
