@@ -2,7 +2,6 @@ import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { createEditor, EditorInstance, EditorLanguage } from './createEditor';
-import 'monaco-editor/min/vs/editor/editor.main.css';
 import './monaco-editor.scss';
 
 export type EditorInitEvent = CustomEvent<EditorInstance>;
