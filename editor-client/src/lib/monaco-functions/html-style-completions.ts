@@ -1,5 +1,5 @@
 import { languages } from 'monaco-editor/esm/vs/editor/editor.api';
-import { getCSSLanguageService } from 'vscode-css-languageservice';
+import { getCSSLanguageService, InsertTextFormat } from 'vscode-css-languageservice';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import { getSuggestionRange, getSuggestionTrigger } from './monaco-utils';
 
@@ -36,9 +36,13 @@ export function addHtmlStyleCompletions() {
 
       return {
         suggestions: completionList.items.map((item) => ({
-          label: item.label,
-          kind: languages.CompletionItemKind.Property,
-          insertText: item.insertText || item.label,
+          ...item,
+          additionalTextEdits: undefined,
+          command: undefined,
+          kind: item.kind ?? languages.CompletionItemKind.Property,
+          insertText: item.insertText ?? item.textEdit?.newText ?? item.label,
+          insertTextFormat: InsertTextFormat.Snippet,
+          insertTextRules: languages.CompletionItemInsertTextRule.InsertAsSnippet,
           range,
         })),
       };
