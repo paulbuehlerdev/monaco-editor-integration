@@ -8,6 +8,16 @@ import 'monaco-editor/esm/vs/basic-languages/monaco.contribution';
 import EditorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
 import HtmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
 import TsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
+import { type Environment } from 'monaco-editor/esm/vs/editor/editor.api';
+
+declare global {
+  interface Window {
+    MonacoEnvironment?: Environment;
+  }
+  interface WorkerGlobalScope {
+    MonacoEnvironment?: Environment;
+  }
+}
 
 self.MonacoEnvironment = {
   getWorker(_, label) {
