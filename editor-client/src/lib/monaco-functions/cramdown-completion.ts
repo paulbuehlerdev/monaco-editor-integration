@@ -1,3 +1,4 @@
+import { Range } from 'monaco-editor';
 import { editor, languages, Position, type IDisposable } from 'monaco-editor/esm/vs/editor/editor.api';
 import { getSuggestionRange, getSuggestionTrigger } from './monaco-utils';
 import ITextModel = editor.ITextModel;
@@ -16,7 +17,7 @@ export function addCramdownCompletion({
 
   function isCramdownLayout(lineText: string, position: Position) {
     const beforeCursor = lineText.substring(0, position.column - 1);
-    return !!beforeCursor.match(/layout=\w*$/);
+    return !!beforeCursor.match(/layout="\w*"/);
   }
 
   function getLine(model: ITextModel, position: Position) {
@@ -51,7 +52,7 @@ export function addCramdownCompletion({
     },
   });
 
-  const cramdownLayoutProviderTriggerCharacters = ['='];
+  const cramdownLayoutProviderTriggerCharacters = ['"'];
   const cramdownLayoutProvider = languages.registerCompletionItemProvider('markdown', {
     triggerCharacters: cramdownLayoutProviderTriggerCharacters,
     provideCompletionItems: function (model, position) {
@@ -61,16 +62,13 @@ export function addCramdownCompletion({
         return { suggestions: [] };
       }
 
-      const trigger = getSuggestionTrigger(lineText, word, cramdownLayoutProviderTriggerCharacters);
-      const range = getSuggestionRange(word, position, trigger);
-
       return {
         suggestions: getCramdownLayouts().map((cramdownLayout) => ({
           label: cramdownLayout,
           kind: languages.CompletionItemKind.EnumMember,
           insertText: cramdownLayout,
           detail: `Layout ${cramdownLayout}`,
-          range,
+          range: new Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn),
         })),
       };
     },

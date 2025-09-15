@@ -44,7 +44,12 @@ class EditorTestbed extends LitElement {
           return Array.from(this.cssClassesText.matchAll(/\.\w+/g), (m) => m[0]);
         },
         getCramdownLayouts: () => {
-          return Array.from(this.cssClassesText.matchAll(/(^\w+)|(\s\w+)/g), (m) => m[0]?.trim());
+          return Array.from(
+            this.cssClassesText
+              .split(/\s+/)
+              .map((s) => s.trim())
+              .filter((s) => s.match(/^\w/)),
+          );
         },
       });
     });
@@ -164,8 +169,8 @@ class EditorTestbed extends LitElement {
 
           <div class="stack">
             <span>Cramdown autocompletion</span>
-            <span>Add css classes</span>
-            <span>Add html tags for layout=</span>
+            <span>add classes and tags e.g. .my-class div p ul .other-class</span>
+            <span>use in markdown: <code>{: .my-class .other-class layout="div" }</code></span>
           </div>
         </div>`}
       </div>
